@@ -6,6 +6,7 @@ public class SkeletonMelee : SkeletonMain
 {
     private void Awake()
     {
+        SetTargetName();
         speed = 5;
         health = 50;
         minDamage = 7;
@@ -13,5 +14,8 @@ public class SkeletonMelee : SkeletonMain
         prefDist = 3;
     }
 
-    
+    protected override void Attack(GameObject target)
+    {
+        throw new System.NotImplementedException();
+    }
 }
