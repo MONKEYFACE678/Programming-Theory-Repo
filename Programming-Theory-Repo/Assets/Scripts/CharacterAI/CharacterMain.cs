@@ -19,6 +19,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     [SerializeField] protected GameObject target;
     protected float distanceFromTarget;
     protected float prefDist;
+    public bool isDead;
     private Vector3 dirToTarget;
 
     public void AdjustHealth(int damage)
@@ -41,51 +42,57 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     {
         if(health <=0)
         {
-            Destroy(gameObject);
+            Die();
         }
-        findTarget();
+        if (findTarget())
+        {
+            distanceFromTarget = Vector3.Distance(target.transform.position, gameObject.transform.position);
 
-        distanceFromTarget = Vector3.Distance(target.transform.position, gameObject.transform.position);
+            if (distanceFromTarget <= prefDist - 2)
+            {
+                closeToTarget = true;
+            }
+            else
+            {
+                closeToTarget = false;
+            }
 
-        if (distanceFromTarget <= prefDist -2)
-        {
-            closeToTarget = true;
-        }
-        else
-        {
-            closeToTarget = false;
-        }
+            if (distanceFromTarget >= prefDist + 2)
+            {
+                farToTarget = true;
+            }
+            else
+            {
+                farToTarget = false;
+            }
 
-        if(distanceFromTarget >= prefDist +2)
-        {
-            farToTarget = true;
-        }
-        else
-        {
-            farToTarget = false;
-        }
+            if (farToTarget)
+            {
+                agent.isStopped = false;
+                agent.destination = target.transform.position;
+            }
+            else if (closeToTarget)
+            {
+                dirToTarget = transform.position - target.transform.position;
+                agent.destination = transform.position + dirToTarget;
+                agent.isStopped = false;
+            }
+            else
+            {
+                agent.isStopped = true;
+            }
+            if (!onCooldown)
+            {
+                StartCoroutine(CooldownWithAttack());
+            }
+            RotateTowardsTarget();
 
-        if (farToTarget)
-        {
-            agent.isStopped = false;
-            agent.destination = target.transform.position;
+            if (target.GetComponent<CharacterMain>().isDead)
+            {
+                Destroy(target);
+                target = null;
+            }
         }
-        else if (closeToTarget)
-        {
-            dirToTarget = transform.position - target.transform.position;
-            agent.destination = transform.position + dirToTarget;
-            agent.isStopped = false;
-        }
-        else
-        {
-            agent.isStopped = true;
-        }
-        if(!onCooldown)
-        {
-            StartCoroutine(CooldownWithAttack());
-        }
-        RotateTowardsTarget();
-        
     }
 
 
@@ -95,12 +102,18 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     }
 
 
-    private void findTarget()
+    private bool findTarget()
     {
-        if (target == null)
+        if (target)
+        {
+            return true;
+        }
+        if (GameObject.FindGameObjectWithTag(targetName) != null)
         {
             target = GameObject.FindGameObjectWithTag(targetName);
+            return true;
         }
+        return false;
     }
 
     protected int RandomizeAttackDam()
@@ -115,7 +128,10 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     {
         onCooldown = true; // Set the cooldown flag
         yield return new WaitForSeconds(coolDownLength);
-        Attack(target);
+        if (target)
+        {
+            Attack(target);
+        }
         onCooldown = false; // Reset the cooldown flag
     }
 
@@ -127,5 +143,10 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
             Quaternion rotation = Quaternion.LookRotation(targetDir);
             transform.rotation = rotation;
         }
+    }
+
+    protected void Die()
+    {
+        isDead = true;
     }
 }

@@ -359,11 +359,16 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.8f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.Properties.SourceGenerator.dll"
 -analyzer:"C:/Program Files/Unity/Hub/Editor/2022.3.8f1/Editor/Data/Tools/Unity.SourceGenerators/Unity.SourceGenerators.dll"
-"Assets/Scripts/CharacterMain.cs"
-"Assets/Scripts/EnemyMain.cs"
-"Assets/Scripts/SkeletonMain.cs"
-"Assets/Scripts/SkeletonMelee.cs"
-"Assets/Scripts/SkeletonRanged.cs"
+"Assets/Scripts/CharacterAI/CharacterMain.cs"
+"Assets/Scripts/CharacterAI/EnemyMain.cs"
+"Assets/Scripts/CharacterAI/EnemyMelee.cs"
+"Assets/Scripts/CharacterAI/SkeletonMain.cs"
+"Assets/Scripts/CharacterAI/SkeletonMelee.cs"
+"Assets/Scripts/CharacterAI/SkeletonRanged.cs"
+"Assets/Scripts/IDamageable.cs"
+"Assets/Scripts/ProjectileAI/ProjectileMain.cs"
+"Assets/Scripts/ProjectileAI/SkeleRangedProjectileAI.cs"
+"Assets/Scripts/SpawnManager.cs"
 -langversion:9.0
 
 /deterministic
