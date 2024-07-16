@@ -12,20 +12,10 @@ public class EnemyMelee : EnemyMain
         minDamage = 4;
         maxDamage = 6;
         prefDist = 3;
-    }
-    //start and update just so enemy stays still, temp
-    override protected void Start()
-    {
-        base.Start();
-        agent.isStopped = true;
-    }
-
-    new private void Update()
-    {
-        
+        coolDownLength = 3;
     }
     protected override void Attack(GameObject target)
     {
-        throw new System.NotImplementedException();
+        Damage();
     }
 }

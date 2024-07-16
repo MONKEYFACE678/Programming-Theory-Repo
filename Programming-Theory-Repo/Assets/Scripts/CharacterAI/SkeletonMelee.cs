@@ -12,10 +12,11 @@ public class SkeletonMelee : SkeletonMain
         minDamage = 7;
         maxDamage = 10;
         prefDist = 3;
+        coolDownLength = 3;
     }
 
     protected override void Attack(GameObject target)
     {
-        throw new System.NotImplementedException();
+        Damage();
     }
 }

@@ -89,6 +89,11 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     }
 
 
+    protected void Damage()
+    {
+        target.GetComponent<IDamageable>().AdjustHealth(-RandomizeAttackDam());
+    }
+
 
     private void findTarget()
     {
