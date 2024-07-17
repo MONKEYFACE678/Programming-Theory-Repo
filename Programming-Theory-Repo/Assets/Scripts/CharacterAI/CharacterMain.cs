@@ -7,8 +7,8 @@ using UnityEngine.UI;
 abstract public class CharacterMain : MonoBehaviour, IDamageable
 {
     bool onCooldown;
-    [SerializeField] protected float maxHealth;
-    protected float health;
+    protected float maxHealth;
+    [SerializeField] protected float health;
     protected int coolDownLength;
     protected string targetName;
     protected int minDamage;
@@ -25,16 +25,17 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     private Vector3 dirToTarget;
     private Slider healthBarSlider;
     GameObject healthBar;
+    GameManager gameManager;
 
     public void AdjustHealth(int damage)
     {
         health += damage;
-        Debug.Log(damage + "damage taken");
     }
 
     //make private and nonvirtual when not temp
     protected virtual void Start()
     {
+        gameManager = GameObject.FindGameObjectWithTag("GameController").GetComponent<GameManager>();
         agent = gameObject.GetComponent<NavMeshAgent>();
         agent.speed = speed;
         agent.autoBraking = false;
@@ -154,13 +155,24 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
 
     protected void Die()
     {
+        if (gameObject.CompareTag("Enemy"))
+        {
+            gameManager.adjustMana(3);
+        }
         Destroy(healthBar);
         isDead = true;
     }
 
     private void HealthBarInit()
     {
-        healthBar = (GameObject) Resources.Load("Prefabs/Health bar");
+        if (gameObject.CompareTag("Skeleton"))
+        {
+            healthBar = (GameObject)Resources.Load("Prefabs/Skele Health bar");
+        }
+        else
+        {
+            healthBar = (GameObject)Resources.Load("Prefabs/Enemy Health bar");
+        }
         healthBar = Instantiate(healthBar, GameObject.FindGameObjectWithTag("Canvas").transform);
         healthBarSlider = healthBar.GetComponent<Slider>();
         healthBarSlider.maxValue = maxHealth;

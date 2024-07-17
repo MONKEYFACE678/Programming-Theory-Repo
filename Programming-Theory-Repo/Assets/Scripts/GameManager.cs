@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
@@ -11,26 +12,79 @@ public class GameManager : MonoBehaviour
     Vector3 enemySpawn = new Vector3(0, 1.25f, 9.99f);
     string skeletonPath = "Prefabs/Skeletons/";
     string enemyPath = "Prefabs/Enemies/";
+    int waveNumber = 1;
+    [SerializeField] private TextMeshProUGUI manaText;
+    [SerializeField] private TextMeshProUGUI waveText;
+    const string manaTextPre = "Mana: ";
+    const string waveTextPre = "Wave: ";
+    int mana = 5;
+    int bowSkeleCost = -5;
+    int punchSkeleCost = -10;
+
 
     private void Start()
     {
         bowSkele = (GameObject) Resources.Load(skeletonPath + "RangedSkeleton");
         punchSkele = (GameObject) Resources.Load(skeletonPath + "MeleeSkeleton");
         meleeEnemy = (GameObject) Resources.Load(enemyPath + "MeleeEnemy");
+        StartCoroutine(WaveMaking(1));
+        SpawnBowSkele();
     }
 
-    public void spawnBowSkele()
+    private void Update()
     {
-        Instantiate(bowSkele, skeleSpawn, bowSkele.transform.rotation);
+        manaText.text = manaTextPre + mana;
+        waveText.text = waveTextPre + waveNumber;
     }
 
-    public void spawnPunchSkele()
+    public void SpawnBowSkele()
     {
-        Instantiate(punchSkele, skeleSpawn, punchSkele.transform.rotation);
+        if (adjustMana(bowSkeleCost))
+        {
+            Instantiate(bowSkele, skeleSpawn, bowSkele.transform.rotation);
+        }
     }
 
-    public void spawnMeleeEnemy()
+    public void SpawnPunchSkele()
     {
+        if(adjustMana(punchSkeleCost))
+        { 
+            Instantiate(punchSkele, skeleSpawn, punchSkele.transform.rotation);
+        }
+    }
+
+    public void SpawnMeleeEnemy()
+    {
+
         Instantiate(meleeEnemy, enemySpawn, meleeEnemy.transform.rotation);
+    }
+
+    IEnumerator WaveMaking(int enemyNum)
+    {
+        for(int i = 0; i < enemyNum; i++)
+        {
+            SpawnMeleeEnemy();
+        }
+        while(GameObject.FindGameObjectWithTag("Enemy") != null)
+        {
+            yield return null;
+        }
+        waveNumber++;
+        StartCoroutine(WaveMaking(waveToNumEnemy(waveNumber)));
+    }
+    
+    public bool adjustMana(int mana)
+    {
+        if (this.mana + mana < 0)
+        {
+            return false;
+        }
+        this.mana += mana;
+        return true;
+    }
+
+    int waveToNumEnemy(int waveNum)
+    {
+        return waveNum;
     }
 }

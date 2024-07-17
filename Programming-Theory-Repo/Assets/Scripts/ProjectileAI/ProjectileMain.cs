@@ -7,12 +7,17 @@ public class ProjectileMain : MonoBehaviour
     [SerializeField] protected int speed;
     [SerializeField] protected GameObject target;
     [SerializeField] protected int damage;
+    bool spent;
     private void Start()
     {
-        CooldownThenDeath();
+        StartCoroutine(CooldownThenDeath());
     }
     private void Update()
     {
+        if (spent)
+        {
+            Destroy(gameObject);
+        }
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
@@ -24,7 +29,10 @@ public class ProjectileMain : MonoBehaviour
 
     private void Damage()
     {
-        target.GetComponent<IDamageable>().AdjustHealth(-damage);
+        if (!spent)
+        {
+            target.GetComponent<IDamageable>().AdjustHealth(-damage);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
@@ -32,7 +40,7 @@ public class ProjectileMain : MonoBehaviour
         if(other.gameObject == target)
         {
             Damage();
-            Destroy(gameObject);
+            spent = true;
         }
     }
 
