@@ -8,7 +8,7 @@ public class EnemyMelee : EnemyMain
     {
         SetTargetName();
         speed = 5;
-        health = 10;
+        maxHealth = 10;
         minDamage = 4;
         maxDamage = 6;
         prefDist = 3;

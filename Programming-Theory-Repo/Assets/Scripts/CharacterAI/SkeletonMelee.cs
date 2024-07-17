@@ -8,7 +8,7 @@ public class SkeletonMelee : SkeletonMain
     {
         SetTargetName();
         speed = 5;
-        health = 50;
+        maxHealth = 50;
         minDamage = 7;
         maxDamage = 10;
         prefDist = 3;

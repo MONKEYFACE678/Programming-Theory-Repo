@@ -7,6 +7,10 @@ public class ProjectileMain : MonoBehaviour
     [SerializeField] protected int speed;
     [SerializeField] protected GameObject target;
     [SerializeField] protected int damage;
+    private void Start()
+    {
+        CooldownThenDeath();
+    }
     private void Update()
     {
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
@@ -30,5 +34,11 @@ public class ProjectileMain : MonoBehaviour
             Damage();
             Destroy(gameObject);
         }
+    }
+
+    IEnumerator CooldownThenDeath()
+    {
+        yield return new WaitForSeconds(5);
+        Destroy(gameObject);
     }
 }

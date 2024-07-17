@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.UI;
 
 abstract public class CharacterMain : MonoBehaviour, IDamageable
 {
     bool onCooldown;
-    [SerializeField] protected float health;
+    [SerializeField] protected float maxHealth;
+    protected float health;
     protected int coolDownLength;
     protected string targetName;
     protected int minDamage;
@@ -16,11 +18,13 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     protected bool farToTarget;
     //only protected temp remember to private
     protected NavMeshAgent agent;
-    [SerializeField] protected GameObject target;
+    protected GameObject target;
     protected float distanceFromTarget;
     protected float prefDist;
     public bool isDead;
     private Vector3 dirToTarget;
+    private Slider healthBarSlider;
+    GameObject healthBar;
 
     public void AdjustHealth(int damage)
     {
@@ -35,7 +39,9 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
         agent.speed = speed;
         agent.autoBraking = false;
         agent.stoppingDistance = 0;
-        findTarget();
+        health = maxHealth;
+        HealthBarInit();
+        FindTarget();
     }
 
     virtual protected void Update()
@@ -44,7 +50,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
         {
             Die();
         }
-        if (findTarget())
+        if (FindTarget())
         {
             distanceFromTarget = Vector3.Distance(target.transform.position, gameObject.transform.position);
 
@@ -93,6 +99,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
                 target = null;
             }
         }
+        HealthBarHandling();
     }
 
 
@@ -102,7 +109,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     }
 
 
-    private bool findTarget()
+    private bool FindTarget()
     {
         if (target)
         {
@@ -147,6 +154,21 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
 
     protected void Die()
     {
+        Destroy(healthBar);
         isDead = true;
+    }
+
+    private void HealthBarInit()
+    {
+        healthBar = (GameObject) Resources.Load("Prefabs/Health bar");
+        healthBar = Instantiate(healthBar, GameObject.FindGameObjectWithTag("Canvas").transform);
+        healthBarSlider = healthBar.GetComponent<Slider>();
+        healthBarSlider.maxValue = maxHealth;
+    }
+
+    private void HealthBarHandling()
+    {
+        healthBarSlider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0));
+        healthBarSlider.value = health;
     }
 }
