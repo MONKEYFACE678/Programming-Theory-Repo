@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -24,7 +25,6 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        DontDestroyOnLoad(gameObject);
         bowSkele = (GameObject) Resources.Load(skeletonPath + "RangedSkeleton");
         punchSkele = (GameObject) Resources.Load(skeletonPath + "MeleeSkeleton");
         meleeEnemy = (GameObject) Resources.Load(enemyPath + "MeleeEnemy");
@@ -36,6 +36,11 @@ public class GameManager : MonoBehaviour
     {
         manaText.text = manaTextPre + mana;
         waveText.text = waveTextPre + waveNumber;
+        if (GameObject.FindGameObjectWithTag("Skeleton") == null)
+        {
+            HighScoreManager.CheckAndAddScore(waveNumber, 0);
+            SceneManager.LoadScene("HighScoreScene");
+        }
     }
 
     public void SpawnBowSkele()

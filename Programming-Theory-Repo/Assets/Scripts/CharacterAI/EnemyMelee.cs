@@ -7,7 +7,7 @@ public class EnemyMelee : EnemyMain
     private void Awake()
     {
         SetTargetName();
-        speed = 5;
+        speed = 15;
         maxHealth = 10;
         minDamage = 4;
         maxDamage = 6;

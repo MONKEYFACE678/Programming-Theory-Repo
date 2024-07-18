@@ -3,37 +3,81 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class HighScoreManager : MonoBehaviour
 {
     static int[] highscores = new int[10];
-    string save;
-    string path;
+    static string save;
+    static string path;
     [SerializeField] TextMeshProUGUI highScoreList;
 
 
     private void Start()
     {
-        for(int i = 0; i < 10; i++)
-        {
-            highscores[i] = 0;
-        }
-        path = Application.persistentDataPath + "/test.txt";
-        Debug.Log(path);
+        Load();
+        highScoreList.text = IntArrayToString(highscores);
     }
-    public void Save()
+    public static void Save()
     {
-        StreamWriter writer = new StreamWriter(path, true);
-        save = JsonUtility.ToJson(highscores);
+        path = Application.persistentDataPath + "/SaveData.txt";
+        StreamWriter writer = new StreamWriter(path,false);
+        Wrapper<int> wrapper = new Wrapper<int>();
+        wrapper.array = highscores;
+        save = JsonUtility.ToJson(wrapper);
         writer.WriteLine(save);
         writer.Close();
     }
 
-    public void Load()
+    public static void Load()
     {
+        path = Application.persistentDataPath + "/SaveData.txt";
         StreamReader reader = new StreamReader(path, true);
         save = reader.ReadToEnd();
-        highscores = JsonHelper.getJsonArray<int>(save);
-        highScoreList.text = highscores.ToString();
+        highscores = JsonUtility.FromJson<Wrapper<int>>(save).array;
+        reader.Close();
+    }
+
+    [System.Serializable]
+    public class Wrapper<T>
+    {
+        public T[] array;
+    }
+
+    string IntArrayToString(int[] intArr)
+    {
+        string retStr ="Highest Waves:\n";
+        foreach(int i in intArr)
+        {
+            retStr += i + "\n";
+        }
+        return retStr;
+    }
+
+    public static void CheckAndAddScore(int i, int placement)
+    {
+        Load();
+        if (placement > 9 || placement < 0)
+        {
+            Save();
+            return;
+        }
+        if(i >= highscores[placement])
+        {
+            int temp = highscores[placement];
+            highscores[placement] = i;
+            Save();
+            CheckAndAddScore(temp, placement + 1);
+        }
+        else
+        {
+            CheckAndAddScore(i, placement + 1);
+        }
+    }
+
+    public void BackToTitle()
+    {
+        Save();
+        SceneManager.LoadScene(sceneName: "TitleScreen");
     }
 }

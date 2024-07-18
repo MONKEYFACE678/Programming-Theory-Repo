@@ -368,7 +368,6 @@
 "Assets/Scripts/GameManager.cs"
 "Assets/Scripts/HighScoreManager.cs"
 "Assets/Scripts/IDamageable.cs"
-"Assets/Scripts/JsonHelper.cs"
 "Assets/Scripts/ProjectileAI/ProjectileMain.cs"
 "Assets/Scripts/ProjectileAI/SkeleRangedProjectileAI.cs"
 "Assets/Scripts/TitleScreenManager.cs"
