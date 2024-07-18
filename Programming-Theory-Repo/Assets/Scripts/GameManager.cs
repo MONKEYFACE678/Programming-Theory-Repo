@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        DontDestroyOnLoad(gameObject);
         bowSkele = (GameObject) Resources.Load(skeletonPath + "RangedSkeleton");
         punchSkele = (GameObject) Resources.Load(skeletonPath + "MeleeSkeleton");
         meleeEnemy = (GameObject) Resources.Load(enemyPath + "MeleeEnemy");
