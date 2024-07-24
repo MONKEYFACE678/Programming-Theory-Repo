@@ -180,7 +180,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
 
     private void HealthBarHandling()
     {
-        healthBarSlider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 1, 0));
+        healthBarSlider.transform.position = Camera.main.WorldToScreenPoint(transform.position + new Vector3(0, 2, 0));
         healthBarSlider.value = health;
     }
 }
