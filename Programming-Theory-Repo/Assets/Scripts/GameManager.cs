@@ -9,25 +9,31 @@ public class GameManager : MonoBehaviour
     GameObject bowSkele;
     GameObject punchSkele;
     GameObject meleeEnemy;
+    GameObject bowEnemy;
     Vector3 skeleSpawn = new Vector3(0, 1, 0);
     Vector3 enemySpawn = new Vector3(0, 1.25f, 9.99f);
-    string skeletonPath = "Prefabs/Skeletons/";
-    string enemyPath = "Prefabs/Enemies/";
+    const string skeletonPath = "Prefabs/Skeletons/";
+    const string enemyPath = "Prefabs/Enemies/";
     int waveNumber = 1;
+    [SerializeField] GameObject meleeButton;
+    [SerializeField] GameObject rangedButton;
     [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private TextMeshProUGUI waveText;
     const string manaTextPre = "Mana: ";
     const string waveTextPre = "Wave: ";
     int mana = 5;
-    int bowSkeleCost = -5;
-    int punchSkeleCost = -10;
+    const int bowSkeleCost = -5;
+    const int punchSkeleCost = -10;
 
 
     private void Start()
     {
+        rangedButton.SetActive(false);
+        meleeButton.SetActive(false);
         bowSkele = (GameObject) Resources.Load(skeletonPath + "RangedSkeleton");
         punchSkele = (GameObject) Resources.Load(skeletonPath + "MeleeSkeleton");
         meleeEnemy = (GameObject) Resources.Load(enemyPath + "MeleeEnemy");
+        bowEnemy = (GameObject)Resources.Load(enemyPath + "RangedEnemy");
         StartCoroutine(WaveMaking(1));
         SpawnBowSkele();
     }
@@ -41,11 +47,20 @@ public class GameManager : MonoBehaviour
             HighScoreManager.CheckAndAddScore(waveNumber, 0);
             SceneManager.LoadScene("HighScoreScene");
         }
+        if(mana >= 5)
+        {
+            rangedButton.SetActive(true);
+        }
+
+        if(mana >= 10)
+        {
+            meleeButton.SetActive(true);
+        }
     }
 
     public void SpawnBowSkele()
     {
-        if (adjustMana(bowSkeleCost))
+        if (AdjustMana(bowSkeleCost))
         {
             Instantiate(bowSkele, skeleSpawn, bowSkele.transform.rotation);
         }
@@ -53,7 +68,7 @@ public class GameManager : MonoBehaviour
 
     public void SpawnPunchSkele()
     {
-        if(adjustMana(punchSkeleCost))
+        if(AdjustMana(punchSkeleCost))
         { 
             Instantiate(punchSkele, skeleSpawn, punchSkele.transform.rotation);
         }
@@ -65,21 +80,30 @@ public class GameManager : MonoBehaviour
         Instantiate(meleeEnemy, enemySpawn, meleeEnemy.transform.rotation);
     }
 
+    public void SpawnRangedEnemy()
+    {
+        Instantiate(bowEnemy, enemySpawn, bowEnemy.transform.rotation);
+    }
+
     IEnumerator WaveMaking(int enemyNum)
     {
         for(int i = 0; i < enemyNum; i++)
         {
             SpawnMeleeEnemy();
         }
+        for(int i = 4; i < enemyNum; i += 3)
+        {
+            SpawnRangedEnemy();
+        }
         while(GameObject.FindGameObjectWithTag("Enemy") != null)
         {
             yield return null;
         }
         waveNumber++;
-        StartCoroutine(WaveMaking(waveToNumEnemy(waveNumber)));
+        StartCoroutine(WaveMaking(WaveToNumEnemy(waveNumber)));
     }
     
-    public bool adjustMana(int mana)
+    public bool AdjustMana(int mana)
     {
         if (this.mana + mana < 0)
         {
@@ -89,8 +113,10 @@ public class GameManager : MonoBehaviour
         return true;
     }
 
-    int waveToNumEnemy(int waveNum)
+    int WaveToNumEnemy(int waveNum)
     {
-        return waveNum;
+        float enemyNum = (int) (waveNum / 2 + 0.5);
+        enemyNum = Mathf.Pow(enemyNum, 1.5f);
+        return (int) enemyNum;
     }
 }

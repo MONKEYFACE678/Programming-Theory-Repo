@@ -18,7 +18,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     protected bool farToTarget;
     //only protected temp remember to private
     protected NavMeshAgent agent;
-    protected GameObject target;
+    [SerializeField] protected GameObject target;
     protected float distanceFromTarget;
     protected float prefDist;
     public bool isDead;
@@ -118,7 +118,8 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
         }
         if (GameObject.FindGameObjectWithTag(targetName) != null)
         {
-            target = GameObject.FindGameObjectWithTag(targetName);
+            GameObject[] enemies = GameObject.FindGameObjectsWithTag(targetName);
+            target = enemies[Random.Range(0, enemies.Length)];
             return true;
         }
         return false;
@@ -157,7 +158,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     {
         if (gameObject.CompareTag("Enemy"))
         {
-            gameManager.adjustMana(3);
+            gameManager.AdjustMana(3);
         }
         Destroy(healthBar);
         isDead = true;

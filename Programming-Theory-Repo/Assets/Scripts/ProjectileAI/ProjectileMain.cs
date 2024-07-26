@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class ProjectileMain : MonoBehaviour
 {
-    [SerializeField] protected int speed;
-    [SerializeField] protected GameObject target;
-    [SerializeField] protected int damage;
+    protected int speed;
+    protected GameObject target;
+    protected int damage;
     bool spent;
+    protected int numEnemiesKill;
     private void Start()
     {
         StartCoroutine(CooldownThenDeath());
@@ -40,6 +41,10 @@ public class ProjectileMain : MonoBehaviour
         if(other.gameObject == target)
         {
             Damage();
+            numEnemiesKill--;
+        }
+        if(numEnemiesKill <= 0)
+        {
             spent = true;
         }
     }
