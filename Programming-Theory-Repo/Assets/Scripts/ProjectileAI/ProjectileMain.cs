@@ -5,9 +5,11 @@ using UnityEngine;
 public class ProjectileMain : MonoBehaviour
 {
     protected int speed;
-    protected GameObject target;
+    protected string targetTag;
     protected int damage;
+    float cooldown;
     bool spent;
+    bool onCooldown;
     protected int numEnemiesKill;
     private void Start()
     {
@@ -22,13 +24,14 @@ public class ProjectileMain : MonoBehaviour
         transform.Translate(Vector3.forward * Time.deltaTime * speed);
     }
 
-    public void GetTargetandDam(GameObject target, int dam)
+    public void GetTargetandDam(string targetTag, int dam, float cooldown)
     {
-        this.target = target;
+        this.cooldown = cooldown;
+        this.targetTag = targetTag;
         damage = dam;
     }
 
-    private void Damage()
+    private void Damage(GameObject target)
     {
         if (!spent)
         {
@@ -36,17 +39,45 @@ public class ProjectileMain : MonoBehaviour
         }
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerStay(Collider other)
     {
-        if(other.gameObject == target)
+        if (!onCooldown)
         {
-            Damage();
-            numEnemiesKill--;
+            StartCoroutine(Cooldown());
+            if (other.gameObject.CompareTag(targetTag))
+            {
+                Damage(other.gameObject);
+                numEnemiesKill--;
+            }
         }
-        if(numEnemiesKill <= 0)
+        if (numEnemiesKill <= 0)
         {
             spent = true;
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (!onCooldown)
+        {
+            if (other.gameObject.CompareTag(targetTag))
+            {
+                Damage(other.gameObject);
+                numEnemiesKill--;
+            }
+            StartCoroutine(Cooldown());
+        }
+        if (numEnemiesKill <= 0)
+        {
+            spent = true;
+        }
+    }
+
+    IEnumerator Cooldown()
+    {
+        onCooldown = true;
+        yield return new WaitForSeconds(cooldown);
+        onCooldown = false;
     }
 
     IEnumerator CooldownThenDeath()

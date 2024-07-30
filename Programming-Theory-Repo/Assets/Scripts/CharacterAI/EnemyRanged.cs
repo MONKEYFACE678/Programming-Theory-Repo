@@ -14,13 +14,14 @@ public class EnemyRanged : EnemyMain
         maxDamage = 5;
         prefDist = 10;
         coolDownLength = 2;
-        projectile = (GameObject)Resources.Load("Prefabs/Projectile/EnemyRangedProjectile");
+        projCoolDown = 0;
+        projectile = (GameObject)Resources.Load("Prefabs/Projectile/EnemyArrow");
     }
 
     protected override void Attack(GameObject target)
     {
         GameObject tempProjectile = Instantiate(projectile, transform.position, transform.rotation);
-        tempProjectile.GetComponent<SkeleRangedProjectileAI>().GetTargetandDam(target, RandomizeAttackDam());
+        tempProjectile.GetComponent<ArrowAI>().GetTargetandDam(targetName, RandomizeAttackDam(), projCoolDown);
     }
 
 }

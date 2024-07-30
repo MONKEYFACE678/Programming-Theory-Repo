@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     GameObject bowSkele;
     GameObject punchSkele;
+    GameObject spraySkele;
     GameObject meleeEnemy;
     GameObject bowEnemy;
     Vector3 skeleSpawn = new Vector3(0, 1, 0);
@@ -17,6 +18,7 @@ public class GameManager : MonoBehaviour
     int waveNumber = 1;
     [SerializeField] GameObject meleeButton;
     [SerializeField] GameObject rangedButton;
+    [SerializeField] GameObject sprayButton;
     [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private TextMeshProUGUI waveText;
     const string manaTextPre = "Mana: ";
@@ -24,14 +26,17 @@ public class GameManager : MonoBehaviour
     int mana = 5;
     const int bowSkeleCost = -5;
     const int punchSkeleCost = -10;
+    const int spraySkeleCost = -25;
 
 
     private void Start()
     {
         rangedButton.SetActive(false);
         meleeButton.SetActive(false);
+        sprayButton.SetActive(false);
         bowSkele = (GameObject) Resources.Load(skeletonPath + "RangedSkeleton");
         punchSkele = (GameObject) Resources.Load(skeletonPath + "MeleeSkeleton");
+        spraySkele = (GameObject) Resources.Load(skeletonPath + "SpraySkeleton");
         meleeEnemy = (GameObject) Resources.Load(enemyPath + "MeleeEnemy");
         bowEnemy = (GameObject)Resources.Load(enemyPath + "RangedEnemy");
         StartCoroutine(WaveMaking(1));
@@ -56,6 +61,10 @@ public class GameManager : MonoBehaviour
         {
             meleeButton.SetActive(true);
         }
+        if(mana >= 25)
+        {
+            sprayButton.SetActive(true);
+        }
     }
 
     public void SpawnBowSkele()
@@ -71,6 +80,14 @@ public class GameManager : MonoBehaviour
         if(AdjustMana(punchSkeleCost))
         { 
             Instantiate(punchSkele, skeleSpawn, punchSkele.transform.rotation);
+        }
+    }
+
+    public void SpawnSpraySkele()
+    {
+        if (AdjustMana(spraySkeleCost))
+        {
+            Instantiate(spraySkele,skeleSpawn,spraySkele.transform.rotation);
         }
     }
 

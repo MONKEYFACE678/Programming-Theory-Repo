@@ -96,10 +96,10 @@ GameObject:
   - component: {fileID: 2463012301213488598}
   - component: {fileID: 1303756078802067900}
   - component: {fileID: 3439252302353583227}
-  - component: {fileID: 6235584537779215771}
   - component: {fileID: -1353016787687616990}
+  - component: {fileID: 4690172535728915056}
   m_Layer: 0
-  m_Name: SkeleRangedProjectile
+  m_Name: EnemyArrow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,21 +192,6 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &6235584537779215771
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6958329257849430361}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 762c8c314cb92b24f87cc38fa7885fc8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  speed: 0
-  target: {fileID: 0}
-  damage: 0
 --- !u!65 &-1353016787687616990
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -228,3 +213,15 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.99999994, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &4690172535728915056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6958329257849430361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 762c8c314cb92b24f87cc38fa7885fc8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

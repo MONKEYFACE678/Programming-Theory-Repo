@@ -19,7 +19,7 @@ MonoBehaviour:
     width: 1920
     height: 997
   m_ShowMode: 4
-  m_Title: Project
+  m_Title: Game
   m_RootView: {fileID: 2}
   m_MinSize: {x: 875, y: 300}
   m_MaxSize: {x: 10000, y: 10000}
@@ -120,7 +120,7 @@ MonoBehaviour:
   m_MinSize: {x: 300, y: 100}
   m_MaxSize: {x: 24288, y: 16192}
   vertical: 0
-  controlID: 71
+  controlID: 198
 --- !u!114 &6
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -145,7 +145,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 26
+  controlID: 111
 --- !u!114 &7
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -223,7 +223,7 @@ MonoBehaviour:
   m_MinSize: {x: 100, y: 100}
   m_MaxSize: {x: 8096, y: 16192}
   vertical: 1
-  controlID: 72
+  controlID: 143
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -498,7 +498,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-scene-view-toolbar
@@ -524,7 +524,7 @@ MonoBehaviour:
       floating: 0
       collapsed: 0
       displayed: 1
-      snapOffset: {x: 0, y: 0}
+      snapOffset: {x: 0, y: 25}
       snapOffsetDelta: {x: 0, y: 0}
       snapCorner: 0
       id: unity-transform-toolbar
@@ -777,9 +777,9 @@ MonoBehaviour:
   m_PlayAudio: 0
   m_AudioPlay: 0
   m_Position:
-    m_Target: {x: -80.699265, y: 29.10067, z: 29.83242}
+    m_Target: {x: 600.609, y: 417.06888, z: -516.4167}
     speed: 2
-    m_Value: {x: -80.699265, y: 29.10067, z: 29.83242}
+    m_Value: {x: 600.609, y: 417.06888, z: -516.4167}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -825,20 +825,20 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: -0.030040707, y: -0.59789735, z: -0.022430897, w: 0.80069864}
+    m_Target: {x: 0.10925945, y: -0.018784514, z: 0.0020706183, w: 0.99381554}
     speed: 2
-    m_Value: {x: -0.030040633, y: -0.59789586, z: -0.02243084, w: 0.8006966}
+    m_Value: {x: 0.10926141, y: -0.01878485, z: 0.0020706556, w: 0.99383336}
   m_Size:
-    m_Target: 57.94896
+    m_Target: 82.30981
     speed: 2
-    m_Value: 57.94896
+    m_Value: 82.30981
   m_Ortho:
     m_Target: 0
     speed: 2
     m_Value: 0
   m_CameraSettings:
-    m_Speed: 1
-    m_SpeedNormalized: 0.5
+    m_Speed: 1.9004991
+    m_SpeedNormalized: 0.9499996
     m_SpeedMin: 0.01
     m_SpeedMax: 2
     m_EasingEnabled: 1
@@ -893,9 +893,9 @@ MonoBehaviour:
   m_SceneHierarchy:
     m_TreeViewState:
       scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 6e6a0000
+      m_SelectedIDs: 
       m_LastClickedID: 0
-      m_ExpandedIDs: 7622ecff2cfbffff645a0000805a0000
+      m_ExpandedIDs: 984cffff9061ffff2462fffff29dffffaea1ffff5ed9ffff3ee1fffffcf8ffff685b0000
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -963,7 +963,8 @@ MonoBehaviour:
     m_ShowAllHits: 0
     m_SkipHidden: 0
     m_SearchArea: 1
-    m_Folders: []
+    m_Folders:
+    - Assets/Scripts/ProjectileAI
     m_Globs: []
     m_OriginalText: 
     m_ImportLogFlags: 0
@@ -979,7 +980,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: d0360000
     m_LastClickedID: 14032
-    m_ExpandedIDs: 000000001e5b0000205b0000225b0000245b0000265b0000285b00002a5b00002c5b00002e5b0000305b0000325b0000345b0000365b0000385b0000
+    m_ExpandedIDs: 00000000545a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1004,24 +1005,24 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_AssetTreeState:
-    scrollPos: {x: 0, y: 420}
+    scrollPos: {x: 0, y: 248}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: ffffffff000000001e5b0000205b0000225b0000245b0000265b0000285b00002a5b00002c5b00002e5b0000305b0000325b0000345b0000365b0000385b0000805b0000
+    m_ExpandedIDs: ffffffff00000000485a00004a5a00004c5a00004e5a0000505a0000545a00005e5a0000625a0000645a0000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
-      m_Name: SkeleSprayAI
-      m_OriginalName: SkeleSprayAI
+      m_Name: 
+      m_OriginalName: 
       m_EditFieldRect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 0
         height: 0
-      m_UserData: 27246
+      m_UserData: 0
       m_IsWaitingForDelay: 0
       m_IsRenaming: 0
-      m_OriginalEventType: 0
+      m_OriginalEventType: 11
       m_IsRenamingFilename: 1
       m_ClientGUIView: {fileID: 11}
     m_SearchString: 

@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyRangedProjectileAI : ProjectileMain
+public class SprayAI : ProjectileMain
 {
     private void Awake()
     {
-        speed = 30;
+        speed = 0;
+        numEnemiesKill = 10;
     }
 }

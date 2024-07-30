@@ -10,6 +10,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
     protected float maxHealth;
     [SerializeField] protected float health;
     protected int coolDownLength;
+    protected float projCoolDown;
     protected string targetName;
     protected int minDamage;
     protected int maxDamage;
@@ -96,11 +97,14 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
 
             if (target.GetComponent<CharacterMain>().isDead)
             {
-                Destroy(target);
                 target = null;
             }
         }
         HealthBarHandling();
+        if (isDead)
+        {
+            Destroy(gameObject);
+        }
     }
 
 
