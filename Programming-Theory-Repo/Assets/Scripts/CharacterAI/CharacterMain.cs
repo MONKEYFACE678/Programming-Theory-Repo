@@ -103,6 +103,7 @@ abstract public class CharacterMain : MonoBehaviour, IDamageable
         HealthBarHandling();
         if (isDead)
         {
+            gameManager.killNum++;
             Destroy(gameObject);
         }
     }

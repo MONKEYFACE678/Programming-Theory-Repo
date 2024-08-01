@@ -21,12 +21,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject sprayButton;
     [SerializeField] private TextMeshProUGUI manaText;
     [SerializeField] private TextMeshProUGUI waveText;
+    [SerializeField] private TextMeshProUGUI killText;
     const string manaTextPre = "Mana: ";
     const string waveTextPre = "Wave: ";
+    const string killeTextPre = "Kills: ";
     int mana = 5;
     const int bowSkeleCost = -5;
     const int punchSkeleCost = -10;
     const int spraySkeleCost = -25;
+    public int killNum = 0;
 
 
     private void Start()
@@ -47,6 +50,7 @@ public class GameManager : MonoBehaviour
     {
         manaText.text = manaTextPre + mana;
         waveText.text = waveTextPre + waveNumber;
+        killText.text = killeTextPre + killNum;
         if (GameObject.FindGameObjectWithTag("Skeleton") == null)
         {
             HighScoreManager.CheckAndAddScore(waveNumber, 0);
